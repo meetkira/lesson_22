@@ -11,14 +11,16 @@
 
 
 class Unit:
-    def __init__(self, x: int, y: int, move_type: str, speed: int = 1):
+    def __init__(self, x: int, y: int, speed: int = 1):
         self.field = Field()
         self.x = x
         self.y = y
-        self.move_type = move_type
         self.speed = speed
 
-    def set_speed(self):
+    def _set_move_type(self, move_type):
+        self.move_type = move_type
+
+    def _set_speed(self):
         if self.move_type == "fly":
             self.speed *= 1.2
         elif self.move_type == "crawl":
@@ -26,9 +28,9 @@ class Unit:
         else:
             print("wrong move_type")
 
-    def move(self, direction: str):
-
-        self.set_speed()
+    def move(self, move_type: str, direction: str):
+        self._set_move_type(move_type)
+        self._set_speed()
         if direction == 'UP':
             self.field.set_unit(x=self.x, y=self.y + self.speed, unit=self)
         elif direction == 'DOWN':
